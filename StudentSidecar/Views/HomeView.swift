@@ -117,7 +117,7 @@ struct HomeView: View {
         List {
             homeworksSection
         }
-        .navigationTitle("Monday")
+        .navigationTitle(store.selectedDate.formatted(.dateTime.weekday(.wide)))
         .toolbar {
             toolbarItems
         }
@@ -143,26 +143,26 @@ struct HomeView: View {
             HomeworkRowButton(
                 image: "checkmark",
                 text: "Check in",
-                isComplete: store.state.homeworkModel.checkInModel.hasText
+                isComplete: store.homeworkModel.checkInModel.hasText
             ) {
                 store.send(.checkInTapped)
             }
             HomeworkRowButton(
                 image: "book",
                 text: "Book Review",
-                isComplete: store.state.homeworkModel.bookReviewModel.hasText
+                isComplete: store.homeworkModel.bookReviewModel.hasText
             ) {
                 store.send(.bookReviewTapped)
             }
             HomeworkRowButton(
                 image: "moon",
                 text: "Late night reflection",
-                isComplete: store.state.homeworkModel.lateNightReflectionModel.hasText
+                isComplete: store.homeworkModel.lateNightReflectionModel.hasText
             ) {
                 store.send(.lateNightReflectionTapped)
             }
         } header: {
-            Text(store.state.homeworkModel.isComplete ? "Homework completed!" : "Complete your homework")
+            Text(store.homeworkModel.isComplete ? "Homework completed!" : "Complete your homework")
         } footer: {
             ExportButton {
                 store.send(.exportToPDFButtonTapped)
@@ -172,11 +172,11 @@ struct HomeView: View {
 
     var pdfContainerView: some View {
         VStack {
-            Text(store.state.homeworkModel.checkInModel.text)
+            Text(store.homeworkModel.checkInModel.text)
                 .border(.red, width: 1)
-            Text(store.state.homeworkModel.bookReviewModel.text)
+            Text(store.homeworkModel.bookReviewModel.text)
                 .border(.green, width: 1)
-            Text(store.state.homeworkModel.lateNightReflectionModel.text)
+            Text(store.homeworkModel.lateNightReflectionModel.text)
                 .border(.yellow, width: 1)
         }
         .frame(width: 340, height: 620)
