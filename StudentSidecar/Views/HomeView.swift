@@ -8,6 +8,13 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ObservableState
+struct HomeworkModel {
+    var checkInModel: WriteUpModel
+    var bookReviewModel: WriteUpModel
+    var lateNightReflectionModel: WriteUpModel
+}
+
 @Reducer
 struct HomeFeature {
     @Reducer
@@ -24,9 +31,7 @@ struct HomeFeature {
         var path = StackState<Path.State>()
         @Presents var destination: Destination.State?
         var selectedDate: Date = Date()
-        @Shared var checkInModel: WriteUpModel
-        @Shared var bookReviewModel: WriteUpModel
-        @Shared var lateNightReflectionModel: WriteUpModel
+        @Shared var homeworkModel: HomeworkModel
     }
 
     enum Action: BindableAction {
@@ -63,21 +68,21 @@ struct HomeFeature {
             case .checkInTapped:
                 state.path.append(
                     .writeUp(
-                        WriteUpFeature.State(model: state.$checkInModel)
+                        WriteUpFeature.State(model: state.$homeworkModel.checkInModel)
                     )
                 )
                 return .none
             case .bookReviewTapped:
                 state.path.append(
                     .writeUp(
-                        WriteUpFeature.State(model: state.$bookReviewModel)
+                        WriteUpFeature.State(model: state.$homeworkModel.bookReviewModel)
                     )
                 )
                 return .none
             case .lateNightReflectionTapped:
                 state.path.append(
                     .writeUp(
-                        WriteUpFeature.State(model: state.$lateNightReflectionModel)
+                        WriteUpFeature.State(model: state.$homeworkModel.lateNightReflectionModel)
                     )
                 )
                 return .none
@@ -137,13 +142,25 @@ struct HomeView: View {
 
     var homeworksSection: some View {
         Section {
-            HomeworkRowButton(image: "checkmark", text: "Check in", isComplete: store.state.checkInModel.hasText) {
+            HomeworkRowButton(
+                image: "checkmark",
+                text: "Check in",
+                isComplete: store.state.homeworkModel.checkInModel.hasText
+            ) {
                 store.send(.checkInTapped)
             }
-            HomeworkRowButton(image: "book", text: "Book Review", isComplete: store.state.bookReviewModel.hasText) {
+            HomeworkRowButton(
+                image: "book",
+                text: "Book Review",
+                isComplete: store.state.homeworkModel.bookReviewModel.hasText
+            ) {
                 store.send(.bookReviewTapped)
             }
-            HomeworkRowButton(image: "moon", text: "Late night reflection", isComplete: store.state.lateNightReflectionModel.hasText) {
+            HomeworkRowButton(
+                image: "moon",
+                text: "Late night reflection",
+                isComplete: store.state.homeworkModel.lateNightReflectionModel.hasText
+            ) {
                 store.send(.lateNightReflectionTapped)
             }
         } header: {
@@ -160,9 +177,13 @@ struct HomeView: View {
     HomeView(
         store: Store(
             initialState: HomeFeature.State(
-                checkInModel: Shared(WriteUpModel()),
-                bookReviewModel: Shared(WriteUpModel()),
-                lateNightReflectionModel: Shared(WriteUpModel())
+                homeworkModel: Shared(
+                    HomeworkModel(
+                        checkInModel: WriteUpModel(),
+                        bookReviewModel: WriteUpModel(),
+                        lateNightReflectionModel: WriteUpModel()
+                    )
+                )
             )
         ) {
             HomeFeature()

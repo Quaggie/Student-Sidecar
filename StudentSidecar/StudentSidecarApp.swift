@@ -15,9 +15,13 @@ struct StudentSidecarApp: App {
             HomeView(
                 store: Store(
                     initialState: HomeFeature.State(
-                        checkInModel: Shared(WriteUpModel()),
-                        bookReviewModel: Shared(WriteUpModel()),
-                        lateNightReflectionModel: Shared(WriteUpModel())
+                        homeworkModel: Shared(
+                            HomeworkModel(
+                                checkInModel: WriteUpModel(),
+                                bookReviewModel: WriteUpModel(),
+                                lateNightReflectionModel: WriteUpModel()
+                            )
+                        )
                     )
                 ) {
                     HomeFeature()
