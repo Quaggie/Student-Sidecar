@@ -38,13 +38,13 @@ struct WriteUpView: View {
 
     var body: some View {
         containerView
+            .navigationTitle("Write up!")
     }
 
     var containerView: some View {
         TextEditor(text: $store.model.text)
             .foregroundStyle(.secondary)
             .padding(.horizontal)
-            .navigationTitle("Write up!")
     }
 }
 

@@ -13,6 +13,10 @@ struct HomeworkModel {
     var checkInModel: WriteUpModel
     var bookReviewModel: WriteUpModel
     var lateNightReflectionModel: WriteUpModel
+
+    var isComplete: Bool {
+        checkInModel.hasText && bookReviewModel.hasText && lateNightReflectionModel.hasText
+    }
 }
 
 @Reducer
@@ -20,23 +24,18 @@ struct HomeFeature {
     @Reducer
     enum Path {
         case writeUp(WriteUpFeature)
-    }
-    @Reducer
-    enum Destination {
-        case exportToPDF(ExportToPDFFeature)
+        case exportToPDF(PDFFeature)
     }
 
     @ObservableState
     struct State {
         var path = StackState<Path.State>()
-        @Presents var destination: Destination.State?
         var selectedDate: Date = Date()
         @Shared var homeworkModel: HomeworkModel
     }
 
     enum Action: BindableAction {
         case path(StackActionOf<Path>)
-        case destination(PresentationAction<Destination.Action>)
         case binding(BindingAction<State>)
         case setDateToToday
         case exportToPDFButtonTapped
@@ -53,16 +52,16 @@ struct HomeFeature {
             switch action {
             case .path:
                 return .none
-            case .destination:
-                return .none
             case .binding:
                 return .none
             case .setDateToToday:
                 state.selectedDate = date.now
                 return .none
             case .exportToPDFButtonTapped:
-                state.destination = .exportToPDF(
-                    ExportToPDFFeature.State()
+                state.path.append(
+                    .exportToPDF(
+                        PDFFeature.State(selectedDate: state.selectedDate)
+                    )
                 )
                 return .none
             case .checkInTapped:
@@ -89,7 +88,6 @@ struct HomeFeature {
             }
         }
         .forEach(\.path, action: \.path)
-        .ifLet(\.$destination, action: \.destination)
     }
 }
 
@@ -102,15 +100,15 @@ struct HomeView: View {
             path: $store.scope(state: \.path, action: \.path)
         ) {
             mainView
-                .sheet(item: $store.scope(state: \.destination?.exportToPDF, action: \.destination.exportToPDF)) { exportToPDFStore in
-                    ExportToPDFView(
-                        store: exportToPDFStore
-                    )
-                }
         } destination: { store in
             switch store.case {
             case let .writeUp(store):
                 WriteUpView(store: store)
+            case let .exportToPDF(store):
+                PDFView(
+                    store: store,
+                    container: pdfContainerView
+                )
             }
         }
     }
@@ -164,12 +162,25 @@ struct HomeView: View {
                 store.send(.lateNightReflectionTapped)
             }
         } header: {
-            Text("Complete your homework")
+            Text(store.state.homeworkModel.isComplete ? "Homework completed!" : "Complete your homework")
         } footer: {
             ExportButton {
                 store.send(.exportToPDFButtonTapped)
             }
         }
+    }
+
+    var pdfContainerView: some View {
+        VStack {
+            Text(store.state.homeworkModel.checkInModel.text)
+                .border(.red, width: 1)
+            Text(store.state.homeworkModel.bookReviewModel.text)
+                .border(.green, width: 1)
+            Text(store.state.homeworkModel.lateNightReflectionModel.text)
+                .border(.yellow, width: 1)
+        }
+        .frame(width: 340, height: 620)
+        .fixedSize()
     }
 }
 
