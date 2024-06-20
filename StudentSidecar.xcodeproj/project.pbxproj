@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9050AD62C24D81C0077E143 /* HomeworkCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9050AD52C24D81C0077E143 /* HomeworkCreator.swift */; };
 		A91C4D9F2C19211500DA1554 /* StudentSidecarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4D9E2C19211500DA1554 /* StudentSidecarApp.swift */; };
 		A91C4DA12C19211500DA1554 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4DA02C19211500DA1554 /* HomeView.swift */; };
 		A91C4DA32C19211600DA1554 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A91C4DA22C19211600DA1554 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A9050AD52C24D81C0077E143 /* HomeworkCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkCreator.swift; sourceTree = "<group>"; };
 		A91C4D9B2C19211500DA1554 /* StudentSidecar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudentSidecar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A91C4D9E2C19211500DA1554 /* StudentSidecarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentSidecarApp.swift; sourceTree = "<group>"; };
 		A91C4DA02C19211500DA1554 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A9050AD42C24D80D0077E143 /* HomeworkCreator */ = {
+			isa = PBXGroup;
+			children = (
+				A9050AD52C24D81C0077E143 /* HomeworkCreator.swift */,
+			);
+			path = HomeworkCreator;
+			sourceTree = "<group>";
+		};
 		A91C4D922C19211500DA1554 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +102,7 @@
 		A91C4DAD2C192D5600DA1554 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A9050AD42C24D80D0077E143 /* HomeworkCreator */,
 				A9BB7BCD2C23C35C00E798CD /* Home */,
 				A9BB7BC62C23C28600E798CD /* CheckIn */,
 				A9BB7BCF2C23D5AC00E798CD /* BookReview */,
@@ -242,6 +253,7 @@
 				A9F5F6022C226403006B2782 /* PDFView.swift in Sources */,
 				A9BB7BC52C23919D00E798CD /* CheckInView.swift in Sources */,
 				A91C4DAF2C192D7E00DA1554 /* HomeworkRowButton.swift in Sources */,
+				A9050AD62C24D81C0077E143 /* HomeworkCreator.swift in Sources */,
 				A91C4DA12C19211500DA1554 /* HomeView.swift in Sources */,
 				A9BB7BC92C23C2A100E798CD /* Mood.swift in Sources */,
 				A9BB7BD12C23D5BC00E798CD /* BookReviewView.swift in Sources */,
