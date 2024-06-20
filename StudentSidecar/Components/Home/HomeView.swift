@@ -11,11 +11,11 @@ import ComposableArchitecture
 @ObservableState
 struct HomeworkModel {
     var checkInModel: CheckIn
-    var bookReviewModel: WriteUpModel
+    var bookReviewModel: BookReview
     var lateNightReflectionModel: WriteUpModel
 
     var isComplete: Bool {
-        checkInModel.isComplete && bookReviewModel.hasText && lateNightReflectionModel.hasText
+        checkInModel.isComplete && bookReviewModel.isComplete && lateNightReflectionModel.hasText
     }
 }
 
@@ -25,6 +25,7 @@ struct HomeFeature {
     enum Path {
         case writeUp(WriteUpFeature)
         case checkIn(CheckkInFeature)
+        case bookReview(BookReviewFeature)
         case exportToPDF(PDFFeature)
     }
 
@@ -74,8 +75,8 @@ struct HomeFeature {
                 return .none
             case .bookReviewTapped:
                 state.path.append(
-                    .writeUp(
-                        WriteUpFeature.State(model: state.$homeworkModel.bookReviewModel)
+                    .bookReview(
+                        BookReviewFeature.State(bookReview: state.$homeworkModel.bookReviewModel)
                     )
                 )
                 return .none
@@ -107,6 +108,8 @@ struct HomeView: View {
                 WriteUpView(store: store)
             case let .checkIn(store):
                 CheckInView(store: store)
+            case let .bookReview(store):
+                BookReviewView(store: store)
             case let .exportToPDF(store):
                 PDFView(
                     store: store,
@@ -153,7 +156,7 @@ struct HomeView: View {
             HomeworkRowButton(
                 image: "book",
                 text: "Book Review",
-                isComplete: store.homeworkModel.bookReviewModel.hasText
+                isComplete: store.homeworkModel.bookReviewModel.isComplete
             ) {
                 store.send(.bookReviewTapped)
             }
@@ -181,7 +184,7 @@ struct HomeView: View {
                 + store.homeworkModel.checkInModel.feelingText
             )
                 .border(.red, width: 1)
-            Text(store.homeworkModel.bookReviewModel.text)
+            Text(store.homeworkModel.bookReviewModel.titleText)
                 .border(.green, width: 1)
             Text(store.homeworkModel.lateNightReflectionModel.text)
                 .border(.yellow, width: 1)
@@ -198,7 +201,7 @@ struct HomeView: View {
                 homeworkModel: Shared(
                     HomeworkModel(
                         checkInModel: CheckIn(),
-                        bookReviewModel: WriteUpModel(),
+                        bookReviewModel: BookReview(),
                         lateNightReflectionModel: WriteUpModel()
                     )
                 )

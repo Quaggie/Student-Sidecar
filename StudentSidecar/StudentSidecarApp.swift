@@ -18,7 +18,7 @@ struct StudentSidecarApp: App {
                         homeworkModel: Shared(
                             HomeworkModel(
                                 checkInModel: CheckIn(),
-                                bookReviewModel: WriteUpModel(),
+                                bookReviewModel: BookReview(),
                                 lateNightReflectionModel: WriteUpModel()
                             )
                         )
