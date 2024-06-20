@@ -17,7 +17,7 @@ struct StudentSidecarApp: App {
                     initialState: HomeFeature.State(
                         homeworkModel: Shared(
                             HomeworkModel(
-                                checkInModel: WriteUpModel(),
+                                checkInModel: CheckIn(),
                                 bookReviewModel: WriteUpModel(),
                                 lateNightReflectionModel: WriteUpModel()
                             )

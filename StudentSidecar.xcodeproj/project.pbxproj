@@ -15,6 +15,9 @@
 		A91C4DB12C192DDF00DA1554 /* ExportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4DB02C192DDF00DA1554 /* ExportButton.swift */; };
 		A91C4DB32C192E1500DA1554 /* WriteUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4DB22C192E1500DA1554 /* WriteUpView.swift */; };
 		A98E87FC2C1B9FCA00FE237C /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A98E87FB2C1B9FCA00FE237C /* ComposableArchitecture */; };
+		A9BB7BC52C23919D00E798CD /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BB7BC42C23919D00E798CD /* CheckInView.swift */; };
+		A9BB7BC92C23C2A100E798CD /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BB7BC82C23C2A100E798CD /* Mood.swift */; };
+		A9BB7BCB2C23C2B600E798CD /* MoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BB7BCA2C23C2B600E798CD /* MoodView.swift */; };
 		A9F5F6022C226403006B2782 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F5F6012C226403006B2782 /* PDFView.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +31,9 @@
 		A91C4DAE2C192D7E00DA1554 /* HomeworkRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkRowButton.swift; sourceTree = "<group>"; };
 		A91C4DB02C192DDF00DA1554 /* ExportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportButton.swift; sourceTree = "<group>"; };
 		A91C4DB22C192E1500DA1554 /* WriteUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteUpView.swift; sourceTree = "<group>"; };
+		A9BB7BC42C23919D00E798CD /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInView.swift; sourceTree = "<group>"; };
+		A9BB7BC82C23C2A100E798CD /* Mood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
+		A9BB7BCA2C23C2B600E798CD /* MoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
 		A9F5F6012C226403006B2782 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,8 +68,8 @@
 		A91C4D9D2C19211500DA1554 /* StudentSidecar */ = {
 			isa = PBXGroup;
 			children = (
-				A91C4DAD2C192D5600DA1554 /* Views */,
 				A91C4D9E2C19211500DA1554 /* StudentSidecarApp.swift */,
+				A91C4DAD2C192D5600DA1554 /* Components */,
 				A91C4DA22C19211600DA1554 /* Assets.xcassets */,
 				A91C4DA42C19211600DA1554 /* StudentSidecar.entitlements */,
 				A91C4DA52C19211600DA1554 /* Preview Content */,
@@ -79,16 +85,59 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		A91C4DAD2C192D5600DA1554 /* Views */ = {
+		A91C4DAD2C192D5600DA1554 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A9BB7BCD2C23C35C00E798CD /* Home */,
+				A9BB7BC62C23C28600E798CD /* CheckIn */,
+				A9BB7BCE2C23CA6B00E798CD /* WriteUp */,
+				A9BB7BCC2C23C35200E798CD /* PDF */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		A9BB7BC62C23C28600E798CD /* CheckIn */ = {
+			isa = PBXGroup;
+			children = (
+				A9BB7BC72C23C29900E798CD /* Mood */,
+				A9BB7BC42C23919D00E798CD /* CheckInView.swift */,
+			);
+			path = CheckIn;
+			sourceTree = "<group>";
+		};
+		A9BB7BC72C23C29900E798CD /* Mood */ = {
+			isa = PBXGroup;
+			children = (
+				A9BB7BC82C23C2A100E798CD /* Mood.swift */,
+				A9BB7BCA2C23C2B600E798CD /* MoodView.swift */,
+			);
+			path = Mood;
+			sourceTree = "<group>";
+		};
+		A9BB7BCC2C23C35200E798CD /* PDF */ = {
+			isa = PBXGroup;
+			children = (
+				A9F5F6012C226403006B2782 /* PDFView.swift */,
+			);
+			path = PDF;
+			sourceTree = "<group>";
+		};
+		A9BB7BCD2C23C35C00E798CD /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				A91C4DA02C19211500DA1554 /* HomeView.swift */,
 				A91C4DAE2C192D7E00DA1554 /* HomeworkRowButton.swift */,
 				A91C4DB02C192DDF00DA1554 /* ExportButton.swift */,
-				A91C4DB22C192E1500DA1554 /* WriteUpView.swift */,
-				A9F5F6012C226403006B2782 /* PDFView.swift */,
 			);
-			path = Views;
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A9BB7BCE2C23CA6B00E798CD /* WriteUp */ = {
+			isa = PBXGroup;
+			children = (
+				A91C4DB22C192E1500DA1554 /* WriteUpView.swift */,
+			);
+			path = WriteUp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,10 +217,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F5F6022C226403006B2782 /* PDFView.swift in Sources */,
+				A9BB7BC52C23919D00E798CD /* CheckInView.swift in Sources */,
 				A91C4DAF2C192D7E00DA1554 /* HomeworkRowButton.swift in Sources */,
 				A91C4DA12C19211500DA1554 /* HomeView.swift in Sources */,
+				A9BB7BC92C23C2A100E798CD /* Mood.swift in Sources */,
 				A91C4DB32C192E1500DA1554 /* WriteUpView.swift in Sources */,
 				A91C4D9F2C19211500DA1554 /* StudentSidecarApp.swift in Sources */,
+				A9BB7BCB2C23C2B600E798CD /* MoodView.swift in Sources */,
 				A91C4DB12C192DDF00DA1554 /* ExportButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

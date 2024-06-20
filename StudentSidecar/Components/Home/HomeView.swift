@@ -10,12 +10,12 @@ import ComposableArchitecture
 
 @ObservableState
 struct HomeworkModel {
-    var checkInModel: WriteUpModel
+    var checkInModel: CheckIn
     var bookReviewModel: WriteUpModel
     var lateNightReflectionModel: WriteUpModel
 
     var isComplete: Bool {
-        checkInModel.hasText && bookReviewModel.hasText && lateNightReflectionModel.hasText
+        checkInModel.isComplete && bookReviewModel.hasText && lateNightReflectionModel.hasText
     }
 }
 
@@ -24,6 +24,7 @@ struct HomeFeature {
     @Reducer
     enum Path {
         case writeUp(WriteUpFeature)
+        case checkIn(CheckkInFeature)
         case exportToPDF(PDFFeature)
     }
 
@@ -44,7 +45,7 @@ struct HomeFeature {
         case lateNightReflectionTapped
     }
 
-    @Dependency(\.date) var date
+    @Dependency(\.date.now) var now
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -55,7 +56,7 @@ struct HomeFeature {
             case .binding:
                 return .none
             case .setDateToToday:
-                state.selectedDate = date.now
+                state.selectedDate = now
                 return .none
             case .exportToPDFButtonTapped:
                 state.path.append(
@@ -66,8 +67,8 @@ struct HomeFeature {
                 return .none
             case .checkInTapped:
                 state.path.append(
-                    .writeUp(
-                        WriteUpFeature.State(model: state.$homeworkModel.checkInModel)
+                    .checkIn(
+                        CheckkInFeature.State(checkIn: state.$homeworkModel.checkInModel)
                     )
                 )
                 return .none
@@ -104,6 +105,8 @@ struct HomeView: View {
             switch store.case {
             case let .writeUp(store):
                 WriteUpView(store: store)
+            case let .checkIn(store):
+                CheckInView(store: store)
             case let .exportToPDF(store):
                 PDFView(
                     store: store,
@@ -143,7 +146,7 @@ struct HomeView: View {
             HomeworkRowButton(
                 image: "checkmark",
                 text: "Check in",
-                isComplete: store.homeworkModel.checkInModel.hasText
+                isComplete: store.homeworkModel.checkInModel.isComplete
             ) {
                 store.send(.checkInTapped)
             }
@@ -172,7 +175,11 @@ struct HomeView: View {
 
     var pdfContainerView: some View {
         VStack {
-            Text(store.homeworkModel.checkInModel.text)
+            Text(
+                store.homeworkModel.checkInModel.accomplishmentText
+                + store.homeworkModel.checkInModel.affirmationText
+                + store.homeworkModel.checkInModel.feelingText
+            )
                 .border(.red, width: 1)
             Text(store.homeworkModel.bookReviewModel.text)
                 .border(.green, width: 1)
@@ -184,13 +191,13 @@ struct HomeView: View {
     }
 }
 
-#Preview {
+#Preview("Empty") {
     HomeView(
         store: Store(
             initialState: HomeFeature.State(
                 homeworkModel: Shared(
                     HomeworkModel(
-                        checkInModel: WriteUpModel(),
+                        checkInModel: CheckIn(),
                         bookReviewModel: WriteUpModel(),
                         lateNightReflectionModel: WriteUpModel()
                     )
