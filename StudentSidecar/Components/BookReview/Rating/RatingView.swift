@@ -28,6 +28,7 @@ struct RatingView: View {
             }
         } label: {
             Image(systemName: selectedRating?.rawValue ?? -1 >= rating.rawValue ? "star.fill" : "star")
+                .foregroundStyle(.yellow)
                 .animation(.easeInOut, value: selectedRating)
                 .transition(.opacity)
         }
