@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Mood: String, Identifiable, CaseIterable {
+enum Mood: String, Codable, Identifiable, CaseIterable {
     var id: RawValue { rawValue }
 
     case 😁

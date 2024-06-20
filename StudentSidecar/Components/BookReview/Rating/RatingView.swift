@@ -40,7 +40,7 @@ struct RatingView: View {
     return RatingView(selectedRating: $selectedRating)
 }
 
-enum Rating: Int, Identifiable, CaseIterable {
+enum Rating: Int, Codable, Identifiable, CaseIterable {
     var id: RawValue { rawValue }
 
     case oneStar

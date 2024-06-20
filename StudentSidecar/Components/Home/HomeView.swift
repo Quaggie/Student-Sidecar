@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 @ObservableState
-struct HomeworkModel {
+struct HomeworkModel: Codable {
     var checkInModel: CheckIn
     var bookReviewModel: BookReview
     var lateNightReflectionModel: WriteUpModel
@@ -33,7 +33,7 @@ struct HomeFeature {
     struct State {
         var path = StackState<Path.State>()
         var selectedDate: Date = Date()
-        @Shared var homeworkModel: HomeworkModel
+        @Shared(.homeworkModel) var homeworkModel
     }
 
     enum Action: BindableAction {

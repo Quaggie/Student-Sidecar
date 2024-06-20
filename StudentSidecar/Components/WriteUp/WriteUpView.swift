@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 @ObservableState
-struct WriteUpModel: Equatable {
+struct WriteUpModel: Equatable, Codable {
     var text: String = ""
 
     var hasText: Bool {

@@ -9,7 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 
 @ObservableState
-struct CheckIn: Equatable {
+struct CheckIn: Equatable, Codable {
     var selectedMood: Mood?
     var accomplishmentText: String = ""
     var feelingText: String = ""

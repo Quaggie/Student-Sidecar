@@ -14,15 +14,7 @@ struct StudentSidecarApp: App {
         WindowGroup {
             HomeView(
                 store: Store(
-                    initialState: HomeFeature.State(
-                        homeworkModel: Shared(
-                            HomeworkModel(
-                                checkInModel: CheckIn(),
-                                bookReviewModel: BookReview(),
-                                lateNightReflectionModel: WriteUpModel()
-                            )
-                        )
-                    )
+                    initialState: HomeFeature.State()
                 ) {
                     HomeFeature()
                 }
