@@ -12,7 +12,7 @@ extension PersistenceKey where Self == PersistenceKeyDefault<FileStorageKey<Home
     static var homeworkModel: Self {
         PersistenceKeyDefault(
             .fileStorage(.homeworkModel),
-            HomeworkModel(checkInModel: CheckIn(), bookReviewModel: BookReview(), lateNightReflectionModel: WriteUpModel())
+            HomeworkModel()
         )
     }
 }

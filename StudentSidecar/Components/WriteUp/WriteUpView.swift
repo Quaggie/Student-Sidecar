@@ -9,10 +9,10 @@ import SwiftUI
 import ComposableArchitecture
 
 @ObservableState
-struct WriteUpModel: Equatable, Codable {
+struct WriteUpModel: Homework, Equatable, Codable {
     var text: String = ""
 
-    var hasText: Bool {
+    var isComplete: Bool {
         return !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }

@@ -9,7 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 
 @ObservableState
-struct BookReview: Equatable, Codable {
+struct BookReview: Homework, Equatable, Codable {
     var titleText: String = ""
     var authorText: String = ""
     var genreText: String = ""

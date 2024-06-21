@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 // WIP; Not added anywhere yet
 @ObservableState
-struct Homework: Equatable, Identifiable {
+struct HomeworkCreatorModel: Equatable, Identifiable {
     var id = UUID()
 
     let title: String
@@ -22,7 +22,7 @@ struct Homework: Equatable, Identifiable {
 struct HomeworkCreatorFeature {
     @ObservableState
     struct State: Equatable {
-        var homeworks: [Homework] = []
+        var homeworks: [HomeworkCreatorModel] = []
     }
 
     enum Action: BindableAction {
@@ -39,7 +39,7 @@ struct HomeworkCreatorFeature {
                 return .none
             case .addButtonTapped:
                 state.homeworks.append(
-                    Homework(title: "Something new here", placeholder: "", text: "")
+                    HomeworkCreatorModel(title: "Something new here", placeholder: "", text: "")
                 )
                 return .none
             }

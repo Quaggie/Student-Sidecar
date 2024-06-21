@@ -8,14 +8,72 @@
 import SwiftUI
 import ComposableArchitecture
 
-@ObservableState
-struct HomeworkModel: Codable {
-    var checkInModel: CheckIn
-    var bookReviewModel: BookReview
-    var lateNightReflectionModel: WriteUpModel
+protocol Homework: Codable {
+    typealias ID = String
+    var isComplete: Bool { get }
+}
+
+extension Homework {
+    static var id: ID { String(describing: Self.self) }
+}
+
+struct HomeModel: Homework, Codable, Equatable {
+    var checkInModel: CheckIn = CheckIn()
+    var bookReviewModel: BookReview = BookReview()
+    var lateNightReflectionModel: WriteUpModel = WriteUpModel()
 
     var isComplete: Bool {
-        checkInModel.isComplete && bookReviewModel.isComplete && lateNightReflectionModel.hasText
+        checkInModel.isComplete && bookReviewModel.isComplete && lateNightReflectionModel.isComplete
+    }
+}
+
+@ObservableState
+struct HomeworkModel: Codable {
+    typealias JSON = [String: HomeModel]
+
+    var json: JSON = [:]
+
+    var date: Date = Date() {
+        didSet {
+            if json[formattedDate] == nil {
+                json[formattedDate] = HomeModel()
+            }
+        }
+    }
+    var formattedDate: String {
+        date.formatted(.dateTime.day().month().year())
+    }
+    var checkInModel: CheckIn {
+        get { json[formattedDate]?.checkInModel ?? CheckIn() }
+        set { json[formattedDate]?.checkInModel = newValue }
+    }
+    var bookReviewModel: BookReview {
+        get { json[formattedDate]?.bookReviewModel ?? BookReview() }
+        set { json[formattedDate]?.bookReviewModel = newValue }
+    }
+    var lateNightReflectionModel: WriteUpModel {
+        get { json[formattedDate]?.lateNightReflectionModel ?? WriteUpModel() }
+        set { json[formattedDate]?.lateNightReflectionModel = newValue }
+    }
+
+    var isComplete: Bool {
+        json[date.formatted()]?.checkInModel.isComplete ?? false
+    }
+
+    init() {}
+
+    private enum CodingKeys: CodingKey {
+        case json
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.json = try container.decode(JSON.self, forKey: .json)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(json, forKey: .json)
     }
 }
 
@@ -39,6 +97,7 @@ struct HomeFeature {
     enum Action: BindableAction {
         case path(StackActionOf<Path>)
         case binding(BindingAction<State>)
+        case syncDate
         case setDateToToday
         case exportToPDFButtonTapped
         case checkInTapped
@@ -49,47 +108,66 @@ struct HomeFeature {
     @Dependency(\.date.now) var now
 
     var body: some Reducer<State, Action> {
-        BindingReducer()
-        Reduce { state, action in
-            switch action {
-            case .path:
-                return .none
-            case .binding:
-                return .none
-            case .setDateToToday:
-                state.selectedDate = now
-                return .none
-            case .exportToPDFButtonTapped:
-                state.path.append(
-                    .exportToPDF(
-                        PDFFeature.State(selectedDate: state.selectedDate)
+        CombineReducers {
+            BindingReducer()
+                .onChange(of: \.selectedDate) { _, newValue in
+                    Reduce { state, action in
+                        switch action {
+                        case .binding(let bindingAction):
+                            if bindingAction.is(\.selectedDate) {
+                                state.homeworkModel.date = newValue
+                                print(newValue)
+                            }
+                            return .none
+                        default: 
+                            return .none
+                        }
+                    }
+                }
+            Reduce { state, action in
+                switch action {
+                case .path:
+                    return .none
+                case .binding:
+                    return .none
+                case .syncDate:
+                    state.homeworkModel.date = state.selectedDate
+                    return .none
+                case .setDateToToday:
+                    state.selectedDate = now
+                    state.homeworkModel.date = now
+                    return .none
+                case .exportToPDFButtonTapped:
+                    state.path.append(
+                        .exportToPDF(
+                            PDFFeature.State(selectedDate: state.selectedDate)
+                        )
                     )
-                )
-                return .none
-            case .checkInTapped:
-                state.path.append(
-                    .checkIn(
-                        CheckkInFeature.State(checkIn: state.$homeworkModel.checkInModel)
+                    return .none
+                case .checkInTapped:
+                    state.path.append(
+                        .checkIn(
+                            CheckkInFeature.State(checkIn: state.$homeworkModel.checkInModel)
+                        )
                     )
-                )
-                return .none
-            case .bookReviewTapped:
-                state.path.append(
-                    .bookReview(
-                        BookReviewFeature.State(bookReview: state.$homeworkModel.bookReviewModel)
+                    return .none
+                case .bookReviewTapped:
+                    state.path.append(
+                        .bookReview(
+                            BookReviewFeature.State(bookReview: state.$homeworkModel.bookReviewModel)
+                        )
                     )
-                )
-                return .none
-            case .lateNightReflectionTapped:
-                state.path.append(
-                    .writeUp(
-                        WriteUpFeature.State(model: state.$homeworkModel.lateNightReflectionModel)
+                    return .none
+                case .lateNightReflectionTapped:
+                    state.path.append(
+                        .writeUp(
+                            WriteUpFeature.State(model: state.$homeworkModel.lateNightReflectionModel)
+                        )
                     )
-                )
-                return .none
+                    return .none
+                }
             }
-        }
-        .forEach(\.path, action: \.path)
+        }.forEach(\.path, action: \.path)
     }
 }
 
@@ -102,6 +180,9 @@ struct HomeView: View {
             path: $store.scope(state: \.path, action: \.path)
         ) {
             mainView
+                .onAppear {
+                    store.send(.syncDate)
+                }
         } destination: { store in
             switch store.case {
             case let .writeUp(store):
@@ -163,7 +244,7 @@ struct HomeView: View {
             HomeworkRowButton(
                 image: "moon",
                 text: "Late night reflection",
-                isComplete: store.homeworkModel.lateNightReflectionModel.hasText
+                isComplete: store.homeworkModel.lateNightReflectionModel.isComplete
             ) {
                 store.send(.lateNightReflectionTapped)
             }
@@ -199,11 +280,7 @@ struct HomeView: View {
         store: Store(
             initialState: HomeFeature.State(
                 homeworkModel: Shared(
-                    HomeworkModel(
-                        checkInModel: CheckIn(),
-                        bookReviewModel: BookReview(),
-                        lateNightReflectionModel: WriteUpModel()
-                    )
+                    HomeworkModel()
                 )
             )
         ) {
