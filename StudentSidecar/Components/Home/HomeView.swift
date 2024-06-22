@@ -20,7 +20,7 @@ extension Homework {
 struct HomeModel: Homework, Codable, Equatable {
     var checkInModel: CheckIn = CheckIn()
     var bookReviewModel: BookReview = BookReview()
-    var lateNightReflectionModel: WriteUpModel = WriteUpModel()
+    var lateNightReflectionModel: LateNightReflection = LateNightReflection()
 
     var isComplete: Bool {
         checkInModel.isComplete && bookReviewModel.isComplete && lateNightReflectionModel.isComplete
@@ -51,8 +51,8 @@ struct HomeworkModel: Codable {
         get { json[formattedDate]?.bookReviewModel ?? BookReview() }
         set { json[formattedDate]?.bookReviewModel = newValue }
     }
-    var lateNightReflectionModel: WriteUpModel {
-        get { json[formattedDate]?.lateNightReflectionModel ?? WriteUpModel() }
+    var lateNightReflectionModel: LateNightReflection {
+        get { json[formattedDate]?.lateNightReflectionModel ?? LateNightReflection() }
         set { json[formattedDate]?.lateNightReflectionModel = newValue }
     }
 
@@ -81,9 +81,9 @@ struct HomeworkModel: Codable {
 struct HomeFeature {
     @Reducer
     enum Path {
-        case writeUp(WriteUpFeature)
         case checkIn(CheckkInFeature)
         case bookReview(BookReviewFeature)
+        case lateNightReflection(LateNightReflectionFeature)
         case exportToPDF(PDFFeature)
     }
 
@@ -160,8 +160,8 @@ struct HomeFeature {
                     return .none
                 case .lateNightReflectionTapped:
                     state.path.append(
-                        .writeUp(
-                            WriteUpFeature.State(model: state.$homeworkModel.lateNightReflectionModel)
+                        .lateNightReflection(
+                            LateNightReflectionFeature.State(lateNightReflection: state.$homeworkModel.lateNightReflectionModel)
                         )
                     )
                     return .none
@@ -185,12 +185,12 @@ struct HomeView: View {
                 }
         } destination: { store in
             switch store.case {
-            case let .writeUp(store):
-                WriteUpView(store: store)
             case let .checkIn(store):
                 CheckInView(store: store)
             case let .bookReview(store):
                 BookReviewView(store: store)
+            case let .lateNightReflection(store):
+                LateNightReflectionView(store: store)
             case let .exportToPDF(store):
                 PDFView(
                     store: store,
@@ -267,7 +267,7 @@ struct HomeView: View {
                 .border(.red, width: 1)
             Text(store.homeworkModel.bookReviewModel.titleText)
                 .border(.green, width: 1)
-            Text(store.homeworkModel.lateNightReflectionModel.text)
+            Text(store.homeworkModel.lateNightReflectionModel.gratefulText)
                 .border(.yellow, width: 1)
         }
         .frame(width: 340, height: 620)

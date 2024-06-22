@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		A9050AD62C24D81C0077E143 /* HomeworkCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9050AD52C24D81C0077E143 /* HomeworkCreator.swift */; };
 		A9050AD82C24F0010077E143 /* Home+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9050AD72C24F0010077E143 /* Home+Storage.swift */; };
+		A9050ADB2C251E130077E143 /* LateNightReflectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9050ADA2C251E130077E143 /* LateNightReflectionView.swift */; };
 		A91C4D9F2C19211500DA1554 /* StudentSidecarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4D9E2C19211500DA1554 /* StudentSidecarApp.swift */; };
 		A91C4DA12C19211500DA1554 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4DA02C19211500DA1554 /* HomeView.swift */; };
 		A91C4DA32C19211600DA1554 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A91C4DA22C19211600DA1554 /* Assets.xcassets */; };
 		A91C4DA72C19211600DA1554 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A91C4DA62C19211600DA1554 /* Preview Assets.xcassets */; };
 		A91C4DAF2C192D7E00DA1554 /* HomeworkRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4DAE2C192D7E00DA1554 /* HomeworkRowButton.swift */; };
 		A91C4DB12C192DDF00DA1554 /* ExportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4DB02C192DDF00DA1554 /* ExportButton.swift */; };
-		A91C4DB32C192E1500DA1554 /* WriteUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91C4DB22C192E1500DA1554 /* WriteUpView.swift */; };
 		A98E87FC2C1B9FCA00FE237C /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A98E87FB2C1B9FCA00FE237C /* ComposableArchitecture */; };
 		A9BB7BC52C23919D00E798CD /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BB7BC42C23919D00E798CD /* CheckInView.swift */; };
 		A9BB7BC92C23C2A100E798CD /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BB7BC82C23C2A100E798CD /* Mood.swift */; };
@@ -28,6 +28,7 @@
 /* Begin PBXFileReference section */
 		A9050AD52C24D81C0077E143 /* HomeworkCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkCreator.swift; sourceTree = "<group>"; };
 		A9050AD72C24F0010077E143 /* Home+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+Storage.swift"; sourceTree = "<group>"; };
+		A9050ADA2C251E130077E143 /* LateNightReflectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LateNightReflectionView.swift; sourceTree = "<group>"; };
 		A91C4D9B2C19211500DA1554 /* StudentSidecar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudentSidecar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A91C4D9E2C19211500DA1554 /* StudentSidecarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentSidecarApp.swift; sourceTree = "<group>"; };
 		A91C4DA02C19211500DA1554 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -36,7 +37,6 @@
 		A91C4DA62C19211600DA1554 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A91C4DAE2C192D7E00DA1554 /* HomeworkRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkRowButton.swift; sourceTree = "<group>"; };
 		A91C4DB02C192DDF00DA1554 /* ExportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportButton.swift; sourceTree = "<group>"; };
-		A91C4DB22C192E1500DA1554 /* WriteUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteUpView.swift; sourceTree = "<group>"; };
 		A9BB7BC42C23919D00E798CD /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInView.swift; sourceTree = "<group>"; };
 		A9BB7BC82C23C2A100E798CD /* Mood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
 		A9BB7BCA2C23C2B600E798CD /* MoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
@@ -63,6 +63,14 @@
 				A9050AD52C24D81C0077E143 /* HomeworkCreator.swift */,
 			);
 			path = HomeworkCreator;
+			sourceTree = "<group>";
+		};
+		A9050AD92C251E020077E143 /* LateNightReflection */ = {
+			isa = PBXGroup;
+			children = (
+				A9050ADA2C251E130077E143 /* LateNightReflectionView.swift */,
+			);
+			path = LateNightReflection;
 			sourceTree = "<group>";
 		};
 		A91C4D922C19211500DA1554 = {
@@ -104,11 +112,11 @@
 		A91C4DAD2C192D5600DA1554 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A9050AD92C251E020077E143 /* LateNightReflection */,
 				A9050AD42C24D80D0077E143 /* HomeworkCreator */,
 				A9BB7BCD2C23C35C00E798CD /* Home */,
 				A9BB7BC62C23C28600E798CD /* CheckIn */,
 				A9BB7BCF2C23D5AC00E798CD /* BookReview */,
-				A9BB7BCE2C23CA6B00E798CD /* WriteUp */,
 				A9BB7BCC2C23C35200E798CD /* PDF */,
 			);
 			path = Components;
@@ -149,14 +157,6 @@
 				A9050AD72C24F0010077E143 /* Home+Storage.swift */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		A9BB7BCE2C23CA6B00E798CD /* WriteUp */ = {
-			isa = PBXGroup;
-			children = (
-				A91C4DB22C192E1500DA1554 /* WriteUpView.swift */,
-			);
-			path = WriteUp;
 			sourceTree = "<group>";
 		};
 		A9BB7BCF2C23D5AC00E798CD /* BookReview */ = {
@@ -261,9 +261,9 @@
 				A91C4DA12C19211500DA1554 /* HomeView.swift in Sources */,
 				A9BB7BC92C23C2A100E798CD /* Mood.swift in Sources */,
 				A9BB7BD12C23D5BC00E798CD /* BookReviewView.swift in Sources */,
-				A91C4DB32C192E1500DA1554 /* WriteUpView.swift in Sources */,
 				A91C4D9F2C19211500DA1554 /* StudentSidecarApp.swift in Sources */,
 				A9BB7BCB2C23C2B600E798CD /* MoodView.swift in Sources */,
+				A9050ADB2C251E130077E143 /* LateNightReflectionView.swift in Sources */,
 				A91C4DB12C192DDF00DA1554 /* ExportButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
